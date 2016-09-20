@@ -1,0 +1,78 @@
+<html>
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'labelapp/custom.css' %}" />
+
+<script
+        src="https://code.jquery.com/jquery-1.12.4.min.js"
+        integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+        crossorigin="anonymous">
+</script>
+
+<body>
+  <h2> Sentence </h2>
+  <div id="display" class="textdisplay"></div>
+
+<hr></hr>
+  <div id="classification">
+    <form id="paradigms">
+      <input type="radio" value="Positivism">Positivism</input>
+      <input type="radio" value="Postpositivism">Postpositivism</input>
+      <input type="radio" value="Interpretivism/Constructivism">Interpretivism/Constructivism</input>
+      <input type="radio" value="Critical Theories">Critical Theories</input>
+      <input type="radio" value="Participatory Paradigm">Participatory Paradigm</input>
+      <input id="confirm" type="button" onclick="paradigm_classify()" value="Confirm Paradigm"></input>
+    </form>
+    <div id="level1"></div>
+    <div id="level2"></div>
+
+  </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js" type="text/javascript"></script>
+<script>
+
+function parse_paradigm(){
+  var paradigmElements = _.filter($( "form input:radio" ),function(data){if (data.checked) { return data.value }});
+  var paradigms = [];
+  for (i=0; i < paradigmElements.length; i++){
+    paradigms.push(paradigmElements[i].value);
+  }
+  return paradigms;
+}
+
+//knowledge_generation subclassification
+function knowledge_gen(){
+  //taken from http://stackoverflow.com/a/29064649/5411181
+  var metatheory_elements = ['Ontology','Epistemology','Research object','Method','Theory of truth','Validity','Reliability','Training'];
+  var list = '<h2>Knowledge Generation</h2> Which metatheoretical assumption applies? <ul><li>' + metatheory_elements.join('</li><li>') + '</li></ul>';
+  $("#level2").html(list);
+};
+
+//agency subclassification
+function agency(){
+  //taken from http://stackoverflow.com/a/29064649/5411181
+  var metatheory_elements = ['Organising question','Unit of Analysis','Prime empirical focus','Locus of agency','Level of Analysis','Ontology','Recommendations based on specific theoretical assumptions', 'Voice','Ethics','Hegemony','Axiology','Nature of research products','Control'];
+  var list = '<h2>Agency</h2> Which metatheoretical assumption applies? <ul><li>' + metatheory_elements.join('</li><li>') + '</li></ul>';
+  $("#level2").html(list);
+};
+
+//paradigm select
+function paradigm_classify() {
+  var paradigms = parse_paradigm();
+
+  //classify between agency and knowledge generation
+    var classifcation_tag = "Does this sentence fall under <u><a onclick='knowledge_gen()'>knowledge generation</a></u> or <u><a onclick='agency()'> agency</a></u> ?";
+    $("#level1").html(classifcation_tag);
+};
+
+
+$(document).ready(function() {
+//declaring the incoming text data
+  var sentences = {{ paper|safe }};
+  console.log(sentences)
+//displaying the text into a div
+  $("#display").html(sentences);
+
+
+});
+</script>
+</html>
