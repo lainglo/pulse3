@@ -28,6 +28,10 @@ function splitSentence(split_id){
   $('#selected-sentence').append(part1_html);
   $('#selected-sentence').append(part2_html);
 
+  //add subsentence classification to the rubrick
+
+  addClassification('#classification_selection');
+
 }
 
 

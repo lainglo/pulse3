@@ -24,9 +24,10 @@
         <tr id="table-headings"></tr>
       </thead>
 
+      <form id="paradigms">
       <tbody id="classification_selection">
-        <form id="paradigms">
-          <tr id="classification1"></tr>
+
+
       </tbody>
     </table>
         <input id="add_classification" type="button" onclick="addClassification('#classification_selection');" value="Add Classification"></input>
@@ -50,6 +51,8 @@
           classify_number = 1;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+          $("#classification_selection").empty();
+          $("#classification_selection").append('<tr id="classification1"></tr>');
 
           var heading_html = "<th></th>";
 
