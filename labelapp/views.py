@@ -72,9 +72,10 @@ PULSE 3 consists of three components or elements. The first is a paradigm assess
 Table 1), the second is the ethos of analytic eclecticism, and the third is a repertoire of theories.
 The paradigm assessment index calculates the nature of the paradigm found in the marine
 and maritime technology landscape and makes it visible. '''
-    #sentences = dumps(text.split("."))
+    sentences = text.split(".") #this is going to cause errors for cases where a full stop is not used to end a sentence
 
+    sentences = [{"id": i, "sentence": sentences[i-1] } for i in range(1,len(sentences)+1)] 
 
     #text = unicodedata.normalize('NFKD',text).encode('ascii','ignore')
 
-    return render(request,'labelapp/labelpage.html',{ "paper" : dumps(text) })
+    return render(request,'labelapp/labelpage.html',{ "paper" : dumps(sentences) })
